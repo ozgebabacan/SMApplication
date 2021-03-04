@@ -1,0 +1,67 @@
+﻿@using Newtonsoft.Json
+@model SaleResponse
+@{
+    ViewData["Title"] = "Sales Detail Page";
+}
+
+<div class="container">
+    <div class="row">
+        <!-- BEGIN INVOICE -->
+        <div class="col-xs-12 flex-fill">
+            <div class="grid invoice">
+                <div class="grid-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>ORDER LIST</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="line">
+                                        <td><strong>#</strong></td>
+                                        <td class="text-center"><strong>Order ID</strong></td>
+                                        <td class="text-center"><strong>Name</strong></td>
+                                        <td class="text-center"><strong>Nickname</strong></td>
+                                        <td class="text-right"><strong>City</strong></td>
+                                        <td class="text-right"><strong>District</strong></td>
+                                        <td class="text-right"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var (index, order) in @Model.Orders.Select((member, i) => (i + 1, member)))
+                                    {
+                                        <tr>
+                                            <td>@index</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.OrderId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.Fullname)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.Nickname)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.City)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.District)
+                                            </td>
+                                            <td>
+                                                <button id="btn_detail" type="button" class="btn btn-primary" onclick="location.href = '@Url.Action("Detail","Sales",(JsonConvert.SerializeObject(order)))'">Detail</button>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END INVOICE -->
+    </div>
+</div>
+
+
