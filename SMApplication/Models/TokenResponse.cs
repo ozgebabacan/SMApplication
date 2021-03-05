@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace SMApplication.Models
 {
+    /// <summary>
+    /// dologin servisinden dönen result için kullanılan response modeli
+    /// </summary>
     public class TokenResponse:BaseResponse
     {
         public int UserId { get; set; }
@@ -18,6 +21,9 @@ namespace SMApplication.Models
 
     }
 
+    /// <summary>
+    /// dologin servisinden dönen response modeli
+    /// </summary>
     public class TokenServiceResponse
     {
         public bool Result { get; set; }

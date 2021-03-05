@@ -1,4 +1,5 @@
-﻿@model Order
+﻿@using SMApplication.Models.Enum
+@model SaleDetailResponse
 @{
     ViewData["Title"] = "Sales Detail Page";
 }
@@ -16,7 +17,7 @@
                                 <h2>
                                     ORDER<br>
                                     <br />
-                                    <span class="small">@Model.OrderId</span>
+                                    <span class="small"><strong>Order ID: </strong> @Model.Order.OrderId</span>
                                 </h2>
                             </div>
                         </div>
@@ -26,31 +27,34 @@
                         <div class="col-xs-6">
                             <address>
                                 @*<strong>Billed To:</strong>*@<br>
-                                Personal Identification :  @Model.PersonalIdentification<br>
-                                Name : @Model.Fullname<br>
-                                Address : @Model.Address<br>
-                                District :  @Model.District<br>
-                                City : @Model.City<br>
-                                Postal Code : @Model.PostalCode<br>
-                                Phone : @Model.Telephone
+                                <strong>Order Date:</strong>
+                                @Model.Order.OrderDate<br />
+                                <strong>
+                                    Personal
+                                    Identification :
+                                </strong>
+                                @Model.Order.PersonalIdentification<br>
+                                <strong>Name :</strong> @Model.Order.Fullname<br>
+                                <strong>Address :</strong> @Model.Order.Address<br>
+                                <strong>District :</strong>  @Model.Order.District<br>
+                                <strong>City :</strong> @Model.Order.City<br>
+                                <strong>Postal Code :</strong> @Model.Order.PostalCode<br>
+                                <strong>Phone :</strong> @Model.Order.Telephone
                             </address>
                         </div>
 
-                        <div class="col-xs-6 float-right">
-                            <address>
-                                <strong>Order Date:</strong><br>
-                                @Model.OrderDate.ToString("dd/MM/yyyy")
-                            </address>
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
                             <address>
                                 @* <strong>Payment Method:</strong><br>*@
-                                Order Code : @Model.IntegrationOrderCode<br>
-                                Status : @Model.OrderStatus<br>
-                                Tax Authority : @Model.TaxAuthority<br>
-                                Tax Number : @Model.TaxNumber<br>
+                                <strong>
+                                    Order Code :
+                                </strong> @Model.Order.IntegrationOrderCode<br>
+                                <strong>Status :</strong> @Model.Order.OrderStatus<br>
+                                <strong> Tax Authority :</strong> @Model.Order.TaxAuthority<br>
+                                <strong> Tax Number :</strong> @Model.Order.TaxNumber<br>
                             </address>
                         </div>
                     </div>
@@ -67,33 +71,32 @@
                                         <td class="text-right"><strong>Quantity</strong></td>
                                         <td class="text-right"><strong>Cargo Company</strong></td>
                                         <td class="text-right"><strong>Cargo Date</strong></td>
-                                       </tr>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach (var (index, order) in @Model.OrderDetails.Select((member, i) => (i + 1, member)))
-                                {
-                                    <tr>
-                                        <td>@index</td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => order.ProductName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => order.Price)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => order.Quantity)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => order.CargoCompany)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => order.CargoDate.ToString("dd/MM/yyyy"))
-                                        </td>
-                                       
-                                    </tr>
-                                }
-                                
-                                @*<tr>
+                                    @foreach (var (index, order) in @Model.OrderDetail.Select((member, i) => (i + 1, member)))
+                                    {
+                                        <tr>
+                                            <td>@index</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.ProductName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.Price) ₺
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.Quantity)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.CargoCompany)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => order.CargoDate)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                    @*<tr>
                                             <td colspan="3"></td>
                                             <td class="text-right"><strong>Taxes</strong></td>
                                             <td class="text-right"><strong>N/A</strong></td>
@@ -120,3 +123,27 @@
     </div>
 </div>
 
+<div id="dialog-message" title="Hata">
+    <p>
+        @Model.Message
+    </p>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        if ('@Model.Status' == '@Status.Error') {
+            $( "#dialog-message" ).dialog({
+                modal: true,
+                buttons: {
+                    Ok: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        }
+    });
+
+</script>

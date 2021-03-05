@@ -6,6 +6,9 @@ using SMApplication.Models.Enum;
 
 namespace SMApplication.Models
 {
+    /// <summary>
+    /// Tüm response modelleri bu classdan türetilerek kullanılır.
+    /// </summary>
     public class BaseResponse
     {
         public BaseResponse()

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace SMApplication.Models
 {
+    /// <summary>
+    /// GetSales servisi için kullanılan request modeli
+    /// </summary>
     public class SaleDetailRequest
     {
         public string ApiCode { get; set; }

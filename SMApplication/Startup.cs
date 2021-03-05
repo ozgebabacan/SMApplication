@@ -31,7 +31,8 @@ namespace SMApplication
             services
                    .Configure<ServiceSettings>(Configuration.GetSection("ServiceSettings"));
 
-            services.AddTransient<SalesService>();
+            services.AddTransient<SalesService>()
+                .AddTransient<ServiceReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

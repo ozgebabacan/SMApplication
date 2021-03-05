@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SMApplication.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SMApplication.Models;
 
 namespace SMApplication.Controllers
@@ -19,27 +13,20 @@ namespace SMApplication.Controllers
             SalesService = salesService;
         }
 
-        public IActionResult Detail(string detail)
+        public IActionResult Detail(int orderId)
         {
-            //var order = JsonConvert.DeserializeObject<Order>(detail);
+            SaleDetailResponse result = new SaleDetailResponse();
 
-            return View(detail);
+            result = SalesService.GetOrderDetail(orderId);
+
+            return View(result);
         }
 
         public IActionResult List()
         {
-            var tokenResult = SalesService.GetToken();
-
             SaleResponse result = new SaleResponse();
 
-            result = SalesService.GetSalesDetail(new SaleDetailRequest()
-            {
-                ApiCode = tokenResult.ApiCode,
-                StoreId = 37814,
-                OrderStatus = "Completed",
-                InvoiceStatus = 0
-            });
-
+            result = SalesService.GetOrder();
 
             return View(result);
         }

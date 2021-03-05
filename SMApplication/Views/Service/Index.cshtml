@@ -1,7 +1,83 @@
-﻿@{
-    ViewData["Title"] = "Service Report Page";
+﻿@using SMApplication.Models.Enum
+@model LogResponse
+@{
+    ViewData["Title"] = "Sales Detail Page";
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Service Report</h1>
+<div class="container">
+    <div class="row">
+        <!-- BEGIN INVOICE -->
+        <div class="col-xs-12 flex-fill">
+            <div class="grid invoice">
+                <div class="grid-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>SERVICE LOG LIST</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="line">
+                                        <td><strong>#</strong></td>
+                                        <td><strong>Date</strong></td>
+                                        <td><strong>Level</strong></td>
+                                        <td><strong>Message</strong></td>
+                                        <td><strong>Response</strong></td>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var (index, log) in @Model.Logs.Select((member, i) => (i + 1, member)))
+                                    {
+                                        <tr>
+                                            <td>@index</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => log.LocaleTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => log.Level)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => log.Message)
+                                            </td>
+                                            <td><span class="truncate" data-toggle="tooltip" data-original-title="@log.Response">@log.Response</span></td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END INVOICE -->
+    </div>
 </div>
+
+<div id="dialog-message" title="Hata">
+    <p>
+        @Model.Message
+    </p>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        if ('@Model.Status' == '@Status.Error') {
+            $( "#dialog-message" ).dialog({
+                modal: true,
+                buttons: {
+                    Ok: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        }
+    });
+
+</script>
